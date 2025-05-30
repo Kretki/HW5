@@ -1,0 +1,96 @@
+schema: '2.0'
+stages:
+  download:
+    cmd: python src/download.py
+    deps:
+    - path: params.yaml
+      hash: md5
+      md5: bf55a49b90276ca98a3b0256cb7ae62f
+      size: 327
+    - path: src/download.py
+      hash: md5
+      md5: a4ef33fea1d40b5e7d5caf114205e7f2
+      size: 1092
+    outs:
+    - path: data/img_align_celeba
+      hash: md5
+      md5: 07e52ea6957d01707731b8a10dafeb11.dir
+      size: 1409859160
+      nfiles: 202599
+  preprocess:
+    cmd: python src/preprocessing.py
+    deps:
+    - path: data/img_align_celeba
+      hash: md5
+      md5: 07e52ea6957d01707731b8a10dafeb11.dir
+      size: 1409859160
+      nfiles: 202599
+    - path: data/photos
+      hash: md5
+      md5: c4b2ed0440b9eb394bec99f139d1893c.dir
+      size: 7366783
+      nfiles: 55
+    - path: params.yaml
+      hash: md5
+      md5: bf55a49b90276ca98a3b0256cb7ae62f
+      size: 327
+    - path: src/preprocessing.py
+      hash: md5
+      md5: 154e63774a279a431f02bcbb7f4d2c92
+      size: 1064
+    outs:
+    - path: processed/img_align_celeba
+      hash: md5
+      md5: df5dc708dd993831858280eac91ab8b0.dir
+      size: 806110733
+      nfiles: 202305
+    - path: processed_valid/photos
+      hash: md5
+      md5: cc3286c1c7ba863c2e31334c00dbc509.dir
+      size: 215894
+      nfiles: 55
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: params.yaml
+      hash: md5
+      md5: bf55a49b90276ca98a3b0256cb7ae62f
+      size: 327
+    - path: processed/img_align_celeba
+      hash: md5
+      md5: df5dc708dd993831858280eac91ab8b0.dir
+      size: 806110733
+      nfiles: 202305
+    - path: src/model.py
+      hash: md5
+      md5: a4ed6a73ef37eef341d2588be8a2aff6
+      size: 553
+    - path: src/train.py
+      hash: md5
+      md5: e36894934ca9eb1c227c6b705860a31b
+      size: 2256
+    outs:
+    - path: face_classifier.pt
+      hash: md5
+      md5: 80b614639a4ac97b08802340866d6af2
+      size: 112439718
+  evaluate:
+    cmd: python src/eval.py
+    deps:
+    - path: face_classifier.pt
+      hash: md5
+      md5: 80b614639a4ac97b08802340866d6af2
+      size: 112439718
+    - path: params.yaml
+      hash: md5
+      md5: bf55a49b90276ca98a3b0256cb7ae62f
+      size: 327
+    - path: processed_valid/photos
+      hash: md5
+      md5: cc3286c1c7ba863c2e31334c00dbc509.dir
+      size: 215894
+      nfiles: 55
+    - path: src/eval.py
+      hash: md5
+      md5: 586e8439cf0dbf6c49015bfc108c16c6
+      size: 2203

@@ -1,0 +1,34 @@
+stages:
+  download:
+    cmd: python src/download.py
+    deps:
+      - src/download.py
+      - params.yaml
+    outs:
+      - data/img_align_celeba
+  preprocess:
+    cmd: python src/preprocessing.py
+    deps:
+      - src/preprocessing.py
+      - data/img_align_celeba
+      - data/photos
+      - params.yaml
+    outs:
+      - processed/img_align_celeba
+      - processed_valid/photos
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - src/model.py
+      - processed/img_align_celeba
+      - params.yaml
+    outs:
+      - face_classifier.pt
+  evaluate:
+    cmd: python src/eval.py
+    deps:
+      - src/eval.py
+      - face_classifier.pt
+      - processed_valid/photos
+      - params.yaml

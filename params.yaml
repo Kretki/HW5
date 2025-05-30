@@ -1,0 +1,17 @@
+links:
+  celeba_url: https://s3-us-west-1.amazonaws.com/udacity-dlnfd/datasets/celeba.zip
+  end_dir: data
+
+data:
+  train_dir: img_align_celeba
+  valid_dir: photos
+
+preprocessed_data:
+  train_dir: processed/img_align_celeba
+  valid_dir: processed_valid/photos
+
+train:
+  batch_size: 64
+  num_classes: 200
+  lr: 0.001
+  epochs: 10

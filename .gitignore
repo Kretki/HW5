@@ -1,0 +1,6 @@
+*.pt
+data/img_align_celeba
+processed
+processed_valid
+*.zip
+__pycache__
